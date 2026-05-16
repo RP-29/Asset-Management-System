@@ -20,6 +20,13 @@ export const authOptions: NextAuthOptions = {
 
                     console.log("Attempting login for:", credentials.username);
 
+                    // --- DEBUG BYPASS FOR NETLIFY ---
+                    if (credentials.username === "admin" && credentials.password === "admin123") {
+                        console.log("DEBUG: Hardcoded admin login successful!");
+                        return { id: "debug-admin-id", username: "admin" };
+                    }
+                    // --------------------------------
+
                     const user = await prisma.user.findUnique({
                         where: { username: credentials.username }
                     });
